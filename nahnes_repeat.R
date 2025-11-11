@@ -99,8 +99,8 @@ xpt_yong3 <- xpt_yong2[!((xpt_yong2$Hcg %in%1)|(xpt_yong2$Homone %in% 1)|(xpt_yo
                          (xpt_yong2$Age <18)),]
 colSums(is.na(xpt_yong3))/4824
 #transformer the variables as factor, for the next analysis.将分类变量转变为因子。
-xpt_yong3$Drink <- as.factor(xpt_yong3$Drink)
-xpt_yong3$Smoke <- as.factor(xpt_yong3$Smoke)
+xpt_yong3$Drink <- as.character(xpt_yong3$Drink)
+xpt_yong3$Smoke <- as.character(xpt_yong3$Smoke)
 xpt_yong3$Gender2 <- as.factor(xpt_yong3$Gender2)
 xpt_yong3$Pb_DX <- as.factor(xpt_yong3$Pb_DX)
 xpt_yong3$Cd_DX <- as.factor(xpt_yong3$Cd_DX)
@@ -173,12 +173,28 @@ xpt_fenxi$AHEI1[xpt_fenxi$HEI2020<31]<- "<31"
 xpt_fenxi$AHEI1[(xpt_fenxi$HEI2020>31|xpt_fenxi$HEI2020==31)&xpt_fenxi$HEI2020<38]<-"≥31 to <38"
 xpt_fenxi$AHEI1[xpt_fenxi$HEI2020>38|xpt_fenxi$HEI2020==38]<-"≥38"
 xpt_fenxi$AHEI1[is.na(xpt_fenxi$HEI2020)]<-"Missing/refused/unknown"
+
 #多重插补处理缺失值
 library(mice)
 xpt_fenxi<-mice(xpt_fenxi, method = "rf", m=5,printFlag = F, seed = 123)
 xpt_fenxi<- complete(xpt_fenxi)
+
 #计算无法直接获取的炎性因子
 xpt_fenxi$SiRI<- (xpt_fenxi$Neu*xpt_fenxi$Mon)/xpt_fenxi$Lym
 xpt_fenxi$SII<- (xpt_fenxi$Plt*xpt_fenxi$Neu)/xpt_fenxi$Lym
 xpt_fenxi$NLR<- xpt_fenxi$Neu/xpt_fenxi$Lym
 xpt_fenxi$PLR<- xpt_fenxi$Plt/xpt_fenxi$Lym
+xpt_fenxi<-xpt_fenxi[,-c(16)]
+xpt_fenxi_repeat <- xpt_fenxi
+xpt_fenxi<- xpt_fenxi_repeat
+xpt_fenxi$Drink<-as.character(xpt_fenxi$Drink)
+xpt_fenxi$Smoke<- as.character(xpt_fenxi$Smoke)
+#将分类变量进行赋值
+xpt_fenxi$Smoke[xpt_fenxi$Smoke==1] <- "Yes"
+xpt_fenxi$Smoke[xpt_fenxi$Smoke==2] <- "Yes"
+xpt_fenxi$Smoke[xpt_fenxi$Smoke==3] <- "No"
+xpt_fenxi$Smoke[xpt_fenxi$Smoke==7 &xpt_fenxi$Smoke ==9] <- "Missing/Refused/Unknown"
+xpt_fenxi$Drink[xpt_fenxi$Drink ==1] <- "Yes"
+xpt_fenxi$Drink[xpt_fenxi$Drink ==2] <- "No"
+xpt_fenxi$Drink[xpt_fenxi$Drink ==7] <- "Missing/Refused/Unknown"
+xpt_fenxi$Drink[xpt_fenxi$Drink ==9] <- "Missing/Refused/Unknown"
