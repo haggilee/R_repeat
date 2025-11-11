@@ -177,3 +177,8 @@ xpt_fenxi$AHEI1[is.na(xpt_fenxi$HEI2020)]<-"Missing/refused/unknown"
 library(mice)
 xpt_fenxi<-mice(xpt_fenxi, method = "rf", m=5,printFlag = F, seed = 123)
 xpt_fenxi<- complete(xpt_fenxi)
+#计算无法直接获取的炎性因子
+xpt_fenxi$SiRI<- (xpt_fenxi$Neu*xpt_fenxi$Mon)/xpt_fenxi$Lym
+xpt_fenxi$SII<- (xpt_fenxi$Plt*xpt_fenxi$Neu)/xpt_fenxi$Lym
+xpt_fenxi$NLR<- xpt_fenxi$Neu/xpt_fenxi$Lym
+xpt_fenxi$PLR<- xpt_fenxi$Plt/xpt_fenxi$Lym
