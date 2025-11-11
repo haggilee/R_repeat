@@ -187,8 +187,6 @@ xpt_fenxi$PLR<- xpt_fenxi$Plt/xpt_fenxi$Lym
 xpt_fenxi<-xpt_fenxi[,-c(16)]
 xpt_fenxi_repeat <- xpt_fenxi
 xpt_fenxi<- xpt_fenxi_repeat
-xpt_fenxi$Drink<-as.character(xpt_fenxi$Drink)
-xpt_fenxi$Smoke<- as.character(xpt_fenxi$Smoke)
 #将分类变量进行赋值
 xpt_fenxi$Smoke[xpt_fenxi$Smoke==1] <- "Yes"
 xpt_fenxi$Smoke[xpt_fenxi$Smoke==2] <- "Yes"
