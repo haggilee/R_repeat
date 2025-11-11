@@ -1,6 +1,6 @@
 #-----------------------------data extraction and migration----------------------
 #Extract the 2013-2014 data
-setwd("~/BaiduSyncdisk/nhanes_repeat/2013-2014")
+setwd("C:/Users/haggi/Desktop/Deck/Project/R_repeat/2013-2014")
 #BiocManager::install("Rtools")
 #install.packages("Rtools")
 #install.packages("devtools")
@@ -19,14 +19,14 @@ for (i in 2 : length(pre_file)){
   pre_xpt_all <- merge(pre_xpt_all, pre_xpt_alone, by = "SEQN", all = T )
 }
 # Extract the 2015-2016 data
-setwd("~/BaiduSyncdisk/nhanes_repeat/2015-2016")
+setwd("C:/Users/haggi/Desktop/Deck/Project/R_repeat/2015-2016")
 lat_1516_file <- list.files(pattern = "*.xpt")
 lat_1516_xpt_all <- read_xpt(lat_1516_file[1])
 for (i in 2 :length(lat_1516_file)){
   lat_1516_xpt_alone <- read_xpt(lat_1516_file[i])
   lat_1516_xpt_all <- merge(lat_1516_xpt_all, lat_1516_xpt_alone, by = "SEQN", all = T )
 }
-nhanes_variable_xpt <- read.csv("~/BaiduSyncdisk/nhanes_repeat/nhanes_variable&xpt.csv")
+nhanes_variable_xpt <- read.csv("C:/Users/haggi/Desktop/Deck/Project/R_repeat/nhanes_variable&xpt.csv")
 var <- nhanes_variable_xpt
 var_col <- var %>% select(variable)
 var_col <- rbind(var_col,"SDMVPSU", "SDMVSTRA")
@@ -59,20 +59,20 @@ xpt_data <- rbind(pre_xpt_data, lat_1516_xpt_data)
 
 #install_github("jamesjiadazhan/dietaryindex")
 #Extract the nutrition data, and get the score_2013-2014
-nutrition_demo <- read_xpt("~/BaiduSyncdisk/nhanes_repeat/2013-2014/DEMO_H.xpt")
-first_diet <- read_xpt("~/BaiduSyncdisk/nhanes_repeat/2013-2014/DR1TOT_H.xpt")
-sec_diet <- read_xpt("~/BaiduSyncdisk/nhanes_repeat/2013-2014/DR2TOT_H.xpt")
+nutrition_demo <- read_xpt("C:/Users/haggi/Desktop/Deck/Project/R_repeat/2013-2014/DEMO_H.xpt")
+first_diet <- read_xpt("C:/Users/haggi/Desktop/Deck/Project/R_repeat/2013-2014/DR1TOT_H.xpt")
+sec_diet <- read_xpt("C:/Users/haggi/Desktop/Deck/Project/R_repeat/2013-2014/DR2TOT_H.xpt")
 first_diet1 <- read_sas("~/BaiduSyncdisk/nhanes_repeat/2013-2014/fped_dr1tot_1314.sas7bdat")
-sec_diet2 <- read_sas("~/BaiduSyncdisk/nhanes_repeat/2013-2014/fped_dr2tot_1314.sas7bdat")
+sec_diet2 <- read_sas("C:/Users/haggi/Desktop/Deck/Project/R_repeat/2013-2014/fped_dr2tot_1314.sas7bdat")
 AHEI1314 <- HEI2020_NHANES_FPED(FPED_PATH = first_diet1, NUTRIENT_PATH = first_diet,
                                 DEMO_PATH = nutrition_demo,
                                 FPED_PATH2 = sec_diet2, NUTRIENT_PATH2 = sec_diet)
 #Extract the nutrition data, and get the score_2015-2016
-nutrition_demo_2 <- read_xpt("~/BaiduSyncdisk/nhanes_repeat/2015-2016/DEMO_I.xpt")
-first_diet_2 <- read_xpt("~/BaiduSyncdisk/nhanes_repeat/2015-2016/DR1TOT_I.xpt")
-sec_diet_2 <- read_xpt("~/BaiduSyncdisk/nhanes_repeat/2015-2016/DR2TOT_I.xpt")
-first_diet_21 <-read_sas("~/BaiduSyncdisk/nhanes_repeat/2015-2016/fped_dr1tot_1516.sas7bdat")
-sec_diet_21 <- read_sas("~/BaiduSyncdisk/nhanes_repeat/2015-2016/fped_dr2tot_1516.sas7bdat")
+nutrition_demo_2 <- read_xpt("C:/Users/haggi/Desktop/Deck/Project/R_repeat/2015-2016/DEMO_I.xpt")
+first_diet_2 <- read_xpt("C:/Users/haggi/Desktop/Deck/Project/R_repeat/2015-2016/DR1TOT_I.xpt")
+sec_diet_2 <- read_xpt("C:/Users/haggi/Desktop/Deck/Project/R_repeat/2015-2016/DR2TOT_I.xpt")
+first_diet_21 <-read_sas("C:/Users/haggi/Desktop/Deck/Project/R_repeat/2015-2016/fped_dr1tot_1516.sas7bdat")
+sec_diet_21 <- read_sas("C:/Users/haggi/Desktop/Deck/Project/R_repeat/2015-2016/fped_dr2tot_1516.sas7bdat")
 AHEI1516 <- HEI2020_NHANES_FPED(FPED_PATH = first_diet_21, NUTRIENT_PATH = first_diet_2,
                                 DEMO_PATH = nutrition_demo_2,
                                 FPED_PATH2 = sec_diet_21, NUTRIENT_PATH2 = sec_diet_2)
