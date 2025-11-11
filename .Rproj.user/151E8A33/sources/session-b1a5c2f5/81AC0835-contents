@@ -1,0 +1,18 @@
+#2013-2014的数据提取
+setwd("~/nhanes_repeat/2013-2014")#需要把文件放到同一个文件夹中，或者路径的选择也必须准确
+#BiocManager::install("haven")
+library(haven)
+pre_file <- list.files(pattern  = "*.xpt")
+pre_xpt_all <- read_xpt((pre_file[1]))
+for (i in 2 : length(pre_file)){
+  pre_xpt_alone <- read_xpt(pre_file[i])
+  pre_xpt_all <- merge(pre_xpt_all, pre_xpt_alone, by = "SEQN", all = T )
+}
+#2015-2016的数据提取
+setwd("~/nhanes_repeat/2015-2016")
+lat_1516_file <- list.files(pattern = "*.xpt")
+lat_1516_xpt_all <- read_xpt(lat_1516_file[1])
+for (i in 2 :length(lat_1516_file)){
+  lat_1516_xpt_alone <- read_xpt(lat_1516_file[i])
+  lat_1516_xpt_all <- merge(lat_1516_xpt_all, lat_1516_xpt_alone, by = "SEQN", all = T )
+}
