@@ -196,3 +196,24 @@ xpt_fenxi$Drink[xpt_fenxi$Drink ==1] <- "Yes"
 xpt_fenxi$Drink[xpt_fenxi$Drink ==2] <- "No"
 xpt_fenxi$Drink[xpt_fenxi$Drink ==7] <- "Missing/Refused/Unknown"
 xpt_fenxi$Drink[xpt_fenxi$Drink ==9] <- "Missing/Refused/Unknown"
+#将有毒金属和微量元素进行分组
+xpt_fenxi$Pb_group <- cut(xpt_fenxi$Pb, 
+                          breaks = quantile(xpt_fenxi$Pb, probs = c(0, 1/3, 2/3, 1)),
+                          labels = c("低", "中","高"),
+                          include.lowest = TRUE)#设置左闭右开区间
+xpt_fenxi$Cd_group <- cut(xpt_fenxi$Cd, 
+                          breaks = quantile(xpt_fenxi$Cd, probs = c(0, 1/3, 2/3, 1)),
+                          labels = c("低", "中","高"),
+                          include.lowest = TRUE)
+xpt_fenxi$Hg_group <- cut(xpt_fenxi$Hg, 
+                          breaks = quantile(xpt_fenxi$Hg, probs = c(0, 1/3, 2/3, 1)),
+                          labels = c("低", "中","高"),
+                          include.lowest = TRUE)
+xpt_fenxi$Se_group <- cut(xpt_fenxi$Se, 
+                          breaks = quantile(xpt_fenxi$Se, probs = c(0, 1/3, 2/3, 1)),
+                          labels = c("低", "中","高"),
+                          include.lowest = TRUE)
+xpt_fenxi$Mn_group <- cut(xpt_fenxi$Mn, 
+                          breaks = quantile(xpt_fenxi$Mn, probs = c(0, 1/3, 2/3, 1)),
+                          labels = c("低", "中","高"),
+                          include.lowest = TRUE)
